@@ -4,6 +4,7 @@ import proccessing
 
 def run_summary(text_content):
     frequency_table = pre_proccessing_text.create_dictionary_table(text_content)
+    
     sentences = pre_proccessing_text.sent_token(text_content)
     print('******SENTENCES****')
     print(sentences)

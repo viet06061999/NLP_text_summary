@@ -1,16 +1,15 @@
-from nltk.corpus import stopwords
-from nltk.tokenize import sent_tokenize
 from vncorenlp import VnCoreNLP
+vncorenlp_file = r'.\VnCoreNLP\VnCoreNLP-1.1.1.jar'
+vncorenlp = VnCoreNLP(vncorenlp_file)
 
 def create_dictionary_table(text_string):
     #remove stop words
+    text_string_tmp = text_string.lower()
     lines = []
     with open(r'./vietnamese-stopwords-dash.txt','r',encoding='utf-8') as f:
          lines = f.read().split('\n')
     stop_words = set(lines)
-    vncorenlp_file = r'.\VnCoreNLP\VnCoreNLP-1.1.1.jar'
-    vncorenlp = VnCoreNLP(vncorenlp_file)
-    words =vncorenlp.tokenize(text_string.replace('.', ' '))
+    words =vncorenlp.tokenize(text_string_tmp.replace('.', ' '))
     vncorenlp.close()
     # reducing words to root word
     # create dictionary for the word frequency table
@@ -27,4 +26,7 @@ def create_dictionary_table(text_string):
     return frequency_table
 
 def sent_token(text_content):
-    return sent_tokenize(text_content)
+    # words =vncorenlp.tokenize(text_content.replace('.', '. '))
+    words =vncorenlp.tokenize(text_content)
+    vncorenlp.close()
+    return words

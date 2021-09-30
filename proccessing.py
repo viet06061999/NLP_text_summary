@@ -3,14 +3,15 @@ def calculate_sentence_scores(sentences, frequency_table) ->dict:
     print("freq table:", frequency_table)
     for sentence in sentences:
         sentence_wordcount_without_stop_words = 0
-        for word_weight in frequency_table:
-            if word_weight in sentence.lower():
+        for word_stc in sentence:
+            if word_stc.lower() in frequency_table:
                 sentence_wordcount_without_stop_words += 1
-                if sentence[:7] in sentence_weight:
-                    sentence_weight[sentence[:7]] += frequency_table[word_weight]
+                sent_title = ''.join(sentence[:7])
+                if sent_title in sentence_weight:
+                    sentence_weight[sent_title] += frequency_table[ word_stc.lower()]
                 else:
-                    sentence_weight[sentence[:7]] = frequency_table[word_weight]      
-        sentence_weight[sentence[:7]] = sentence_weight[sentence[:7]] / sentence_wordcount_without_stop_words            
+                    sentence_weight[sent_title] = frequency_table[ word_stc.lower()]      
+        sentence_weight[sent_title] = sentence_weight[sent_title] / sentence_wordcount_without_stop_words            
     return sentence_weight
 
 def calculate_average_score(sentence_weight) -> int:
@@ -23,13 +24,12 @@ def calculate_average_score(sentence_weight) -> int:
 def get_summary(sentences, sentence_weight, threshold):
     sentence_counter = 0
     article_summary = ''
-
     for sentence in sentences:
-        if sentence[:7] in sentence_weight and sentence_weight[sentence[:7]] >= threshold:
-            article_summary += " " + sentence
+        sent_title = ''.join(sentence[:7])
+        if sent_title in sentence_weight and sentence_weight[sent_title] >= threshold:
+            article_summary += ''.join(str(x)+" " for x in sentence)
             sentence_counter +=1
-
-    return article_summary        
+    return  article_summary.replace('_', ' ')      
 
                 
             
