@@ -1,6 +1,6 @@
 program use python 3
 
-**Install packages and create database**
+**Install packages**
 
 ```
 pip install -r requirements.txt
